@@ -39,10 +39,10 @@
           </div>
           <div class="flex-1 flex flex-col">
             <div class="font-bold text-lg">뷔</div>
-            <div class="text-gray-500">@Bts</div>
+            <div class="text-gray-500 text-sm">@Bts</div>
           </div>
           <div>
-            <button class="border-2 border-primary hover:bg-blue-100 px-4 py-1 rounded-full text-primary">팔로우</button>
+            <button class="border-2 border-primary hover:bg-blue-100 px-4 py-1 rounded-full text-primary text-sm">팔로우</button>
           </div>
         </div>
       </div>

@@ -1,69 +1,69 @@
 <template>
   <div class="flex h-screen container mx-auto">
       <!-- side section -->
-      <div class="w-60 lg:1/4 pt-5 lg:ml-10 flex flex-col justify-between border-r border-gray-100">
-        <div class="flex flex-col items-center lg:items-start">
+      <div class="w-60 xl:1/4 pt-5 xl:ml-10 flex flex-col justify-between border-r border-gray-100">
+        <div class="flex flex-col items-center xl:items-start">
           <!-- twitter logo -->
-          <i class="fab fa-twitter text-3xl text-primary lg:ml-4 mb-3"></i>
+          <i class="fab fa-twitter text-3xl text-primary xl:ml-4 mb-3"></i>
           <!-- sidemenu icons -->
           <div class="flex flex-col items-start">
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full cursor-pointer">
-              <i class="fas fa-home fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">홈</span>
+              <i class="fas fa-home fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">홈</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full cursor-pointer">
-              <i class="fab fa-slack-hash fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">해시태그</span>
+              <i class="fab fa-slack-hash fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">해시태그</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="fas fa-search fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">탐색하기</span>
+              <i class="fas fa-search fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">탐색하기</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="far fa-bell fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">알림</span>
+              <i class="far fa-bell fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">알림</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="far fa-envelope fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">쪽지</span>
+              <i class="far fa-envelope fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">쪽지</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="far fa-bookmark fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">북마크</span>
+              <i class="far fa-bookmark fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">북마크</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="far fa-list-alt fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">리스트</span>
+              <i class="far fa-list-alt fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">리스트</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="far fa-user-circle fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">프로필</span>
+              <i class="far fa-user-circle fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">프로필</span>
             </div>
 
             <div class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full">
-              <i class="fas fa-plus fa-fw text-2xl"></i><span class="ml-5 text-lg hidden lg:inline-block">더 보기</span>
+              <i class="fas fa-plus fa-fw text-2xl"></i><span class="ml-5 text-xl hidden xl:inline-block">더 보기</span>
             </div>
 
           </div>
           <!-- tweet button -->
-          <div class="lg:w-full w-12 h-12 lg:pr-3 flex justify-center">
+          <div class="xl:w-full w-12 h-12 xl:pr-3 flex justify-center">
             <button class="mt-3 bg-primary text-white w-full h-12 rounded-full hover:bg-dark">
-              <span class="hidden lg:inline-block">Tweet</span>
-              <i class="fas fa-plus lg:hidden"></i>
+              <span class="hidden xl:inline-block">Tweet</span>
+              <i class="fas fa-plus xl:hidden"></i>
               </button>
           </div>
         </div>
 
-        <div class="lg:mr-3 mb-3">
-            <button class="hidden lg:flex mt-3 px-2 py-1 w-full h-12 rounded-full hover:bg-blue-50">
+        <div class="xl:mr-3 mb-3">
+            <button class="hidden xl:flex mt-3 px-2 py-1 w-full h-12 rounded-full hover:bg-blue-50">
               <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full" alt="">
-              <div class="lg:ml-2 hidden lg:block">
+              <div class="xl:ml-2 hidden xl:block">
                 <div class="text-sm font-bold">honey.com</div>
                 <div class="text-xs text-gray-500 text-left">@honey-lee</div>
               </div>
-              <i class="ml-auto fas fa-ellipsis-h fa-fw text-2xl hidden lg:block"></i>
+              <i class="ml-auto fas fa-ellipsis-h fa-fw text-2xl hidden xl:block"></i>
             </button>
-            <div class="lg:hidden flex justify-center">
+            <div class="xl:hidden flex justify-center">
               <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full cursor-pointer hover:opacity-80" alt="">
             </div>
         </div>
@@ -71,14 +71,12 @@
       </div>
     
     <!-- main section -->
-    <div class="flex-1">
-      <div class="flex h-screen">
-        <!-- main part -->
-        <Home />
-        <!-- trend section -->
-        <Notifications />
-
-      </div>
+    <div class="flex-1 flex h-screen">
+ 
+      <!-- main part -->
+      <!-- <Home /> -->
+      <!-- trend section -->
+      <Profile />
     </div>
   
   </div>
@@ -86,10 +84,10 @@
 
 <script>
 import Home from './pages/Home.vue'
-import Notifications from './pages/Notifications.vue'
+import Profile from './pages/Profile.vue'
 
 export default {
-  components: { Home, Notifications }
+  components: { Home, Profile }
 }
 
 </script>
