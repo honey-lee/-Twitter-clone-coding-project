@@ -13,7 +13,7 @@
         </div>
       </div>
       <!-- background image -->
-      <div class="bg-gray-300 h-40 relative">
+      <div class="bg-gray-300 h-40 relative flex-none">
         <!-- profile image -->
         <div class="w-28 h-28 border-4 border-white bg-gray-100 rounded-full absolute -bottom-14 left-2">
           <img src="http://picsum.photos/200" class="rounded-full opacity-90 hover:opacity-100 cursor-pointer" alt="">
@@ -43,11 +43,14 @@
       <!-- tabs -->
       <div class="flex justify-between border-b border-color mt-3">
         <div class="py-3 w-1/4 font-bold  text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
-        <div class="py-3 text-gray w-1/4 font-bold   text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
-        <div class="py-3 text-gray w-1/4 font-bold   text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
-        <div class="py-3 text-gray w-1/4 font-bold   text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
+        <div class="py-3 text-gray w-1/4 font-bold text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
+        <div class="py-3 text-gray w-1/4 font-bold text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
+        <div class="py-3 text-gray w-1/4 font-bold text-center hover:bg-blue-50 cursor-pointer hover:text-primary">트윗</div>
       </div>
-      
+      <!-- tweets -->
+      <div class="overflow-y-auto">
+        <Tweet v-for="tweet in 10" :key="tweet"/>
+      </div>
     </div>
     <!-- trend section -->
     <Trends />
@@ -56,8 +59,10 @@
 
 <script>
 import Trends from "../components/Trends.vue"
+import Tweet from "../components/Tweet.vue"
+
 export default {
-  components: { Trends }
+  components: { Trends, Tweet }
 
 }
 </script>
