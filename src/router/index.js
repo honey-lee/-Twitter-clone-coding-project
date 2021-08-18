@@ -24,6 +24,13 @@ const router = createRouter({
   routes,
 })
 
+router.beforeEach((from, to, next) => {
+  // not authenticated
+  router.push('/login')
+  // authenticated
+  next()
+})
+
 export default router
 
 {/* <router-link to="/" class="hover:text-primary hover:bg-blue-50 px-4 py-2 rounded-full cursor-pointer">
