@@ -2,10 +2,6 @@
   <div @click="$emit('close-modal')" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex justify-center min-h-screen sm:pt-6 sm:px-4 sm:pb-20 text-center sm:block sm:p-0">
       <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-      <!-- This element is to trick the browser into centering the modal contents. -->
-      <!-- <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span> -->
-
       <!-- contents -->
       <div @click.stop class="inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full">
         <div class="border-b border-gray-100 p-2 flex items-center justify-between">
@@ -18,7 +14,7 @@
         </div>
         <!-- tweeting section -->
         <div class="flex p-4">
-          <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full hover:opacity-80 cursor-pointer" alt="">
+          <img :src="currentUser.profile_image_url" class="w-10 h-10 rounded-full hover:opacity-80 cursor-pointer" alt="">
           <div class="flex-1 flex flex-col ml-2">
             <textarea @keyup.enter="onAddTweet" rows="5" v-model="tweetBody" placeholder="무슨 일이 일어나고 있나요?" class="w-full text-lg font-bold focus:outline-none mb-3 resize-none"></textarea>
             <!-- tweet button -->
@@ -37,13 +33,26 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import addTweet from '../utils/addTweet'
+import store from '../store'
 export default {
-  setup() {
+  setup(props, { emit }) {
     const tweetBody = ref('')
-
+    const currentUser = computed(() => store.state.user)
+    const onAddTweet = async() => {
+      try {
+        await addTweet(tweetBody.value, currentUser.value)
+        tweetBody.value = ''
+        emit('close-modal')
+        } catch (e) {
+        console.log('on add tweet error on homepage:', e)
+      }
+    }
     return {
-      tweetBody
+      tweetBody,
+      onAddTweet,
+      currentUser
     }
   }
 }
