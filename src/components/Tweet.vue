@@ -16,22 +16,30 @@
         <!-- tweet actions -->
         <div class="flex justify-between">
           <!-- comment button -->
-          <div @click="showCommentmodal = true" class="text-gray-500 hover:text-primary">
+          <div @click="showCommentmodal = true" class="text-gray-400 hover:text-primary">
             <i class="far fa-comment rounded-full p-2"></i>
             <span class="ml-1 text-sm">{{ tweet.num_comments }}</span>
           </div>
           <!-- retweet button -->
-          <div @click="handleRetweet(tweet)" class="text-gray-500 hover:text-green-500">
+          <div v-if="!tweet.isRetweeted" @click="handleRetweet(tweet)" class="text-gray-500 hover:text-green-400">
+            <i class="fas fa-retweet rounded-full p-2"></i>
+            <span class="ml-1 text-sm">{{ tweet.num_retweets }}</span>
+          </div>
+          <div v-else @click="handleRetweet(tweet)" class="text-green-400">
             <i class="fas fa-retweet rounded-full p-2"></i>
             <span class="ml-1 text-sm">{{ tweet.num_retweets }}</span>
           </div>
           <!-- like button -->
-          <div class="text-gray-500 hover:text-red-500">
+          <div v-if="!tweet.isLiked" class="text-gray-400 hover:text-red-400" @click="handleLikes(tweet)">
+            <i class="far fa-heart rounded-full p-2"></i>
+            <span class="ml-1 text-sm">{{ tweet.num_likes }}</span>
+          </div>
+          <div v-else class="text-red-400" @click="handleLikes(tweet)">
             <i class="far fa-heart rounded-full p-2"></i>
             <span class="ml-1 text-sm">{{ tweet.num_likes }}</span>
           </div>
           <!-- share button -->
-          <div class="text-gray-500 hover:text-primary">
+          <div class="text-gray-400 hover:text-primary">
             <i class="far fa-share-square rounded-full p-2"></i>
           </div>
         </div>
@@ -45,6 +53,7 @@ import moment from 'moment'
 import { ref } from 'vue'
 import CommentModal from './CommentModal.vue'
 import handleRetweet from '../utils/handleRetweet'
+import handleLikes from '../utils/handleLikes'
 
 export default {
   components: { CommentModal },
@@ -54,7 +63,8 @@ export default {
     return {
       moment,
       showCommentmodal,
-      handleRetweet
+      handleRetweet,
+      handleLikes
     }
   }
 }
