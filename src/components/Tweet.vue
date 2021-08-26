@@ -10,9 +10,9 @@
           <span class="text-gray-500 text-xs">{{ moment(tweet.created_at).fromNow() }}</span>
         </div>
         <!-- tweet body -->
-        <div>
+        <router-link :to="`/tweet/${tweet.id}`">
           {{ tweet.tweet_body }}
-        </div>
+        </router-link>
         <!-- tweet actions -->
         <div class="flex justify-between">
           <!-- comment button -->
