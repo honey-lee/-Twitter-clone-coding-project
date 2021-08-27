@@ -1,79 +1,129 @@
 <template>
   <div class="flex-1 flex">
     <div class="flex-1 border-r border-gray-100">
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="tweet">
         <!-- title -->
-        <div class="flex px-3 py-2 border-b border-gray-100 items-center">
+        <div class="flex items-center px-3 py-2 border-b border-gray-100">
           <button @click="router.go(-1)">
-            <i class="fas fa-arrow-left text-primary text-lg hover:bg-blue-50 p-2 rounded-full h-10 w-10"></i>
+            <i class="fas fa-arrow-left text-primary text-lg ml-3 hover:bg-blue-50 p-2 rounded-full h-10 w-10"></i>
           </button>
           <span class="font-bold text-lg ml-6">트윗</span>
         </div>
         <!-- tweet -->
         <div class="px-3 py-2 flex">
-          <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full hover:opacity-90 cursor-porinter">
+          <img :src="tweet.profile_image_url" class="w-10 h-10 rounded-full hover:opacity-90 cursor-pointer" />
           <div class="ml-2">
-            <div class="font-bold">이메일</div>
-            <div class="text-gray text-sm">@honey-lee</div>
+            <div class="font-bold">{{ tweet.email }}</div>
+            <div class="text-gray text-sm">@{{ tweet.username }}</div>
           </div>
         </div>
-        <div class="px-3 py-2">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        <div class="px-3 py-2 text-gray text-xs">오후 11:18 · 2021년 8월 26일</div>
+        <div class="px-3 py-2">{{ tweet.tweet_body }}</div>
+        <div class="px-3 py-2 text-gray text-xs">{{ moment(tweet.created_at).fromNow() }}</div>
         <div class="h-px w-full bg-gray-100"></div>
         <div class="flex space-x-2 px-3 py-2 items-center">
-          <span class="">1</span>
+          <span class="">{{ tweet.num_retweets }}</span>
           <span class="text-sm text-gray">리트윗</span>
-          <span class=" ml-5">1</span>
+          <span class="ml-5">{{ tweet.num_likes }}</span>
           <span class="text-sm text-gray">마음에 들어요</span>
         </div>
         <div class="h-px w-full bg-gray-100"></div>
-        <!-- button -->
+        <!-- buttons -->
         <div class="flex justify-around py-2">
-          <button>
-            <i class="far fa-comment text-gray-400 text-xl hover:bg-blue-50 hover:text-primary p-2 rounded-full w-10 h-10"></i>
+          <button @click="showCommentModal = true">
+            <i class="far fa-comment text-gray-400 text-xl hover:bg-blue-50 hover:text-primary p-2 rounded-full h-10 w-10"></i>
           </button>
-          <button>
-            <i class="fas fa-retweet text-gray-400 text-xl hover:bg-green-50 hover:text-green-400 p-2 rounded-full w-10 h-10"></i>
+          <button @click="handleRetweet(tweet)">
+            <i v-if="tweet.isRetweeted" class="fas fa-retweet text-xl hover:bg-green-50 text-green-400 p-2 rounded-full h-10 w-10"></i>
+            <i v-else class="fas fa-retweet text-gray-400 text-xl hover:bg-green-50 hover:text-green-400 p-2 rounded-full h-10 w-10"></i>
           </button>
-          <button>
-            <i class="far fa-heart text-gray-400 text-xl hover:bg-red-50 hover:text-red-400 p-2 rounded-full w-10 h-10"></i>
+          <button @click="handleLikes(tweet)">
+            <i v-if="tweet.isLiked" class="far fa-heart text-xl hover:bg-red-50 text-red-400 p-2 rounded-full h-10 w-10"></i>
+            <i v-else class="far fa-heart text-gray-400 text-xl hover:bg-red-50 hover:text-red-400 p-2 rounded-full h-10 w-10"></i>
           </button>
         </div>
         <div class="h-px w-full bg-gray-100"></div>
-        </div>
         <!-- comments -->
-        <div v-for="comment in 10" :key="comment" class="flex hover:bg-gray-100 cursor-pointer px-3 py-3 border-b border-gray-100">
-          <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full hover:opacity-90 cursor-porinter">
+        <div v-for="comment in comments" :key="comment" class="flex hover:bg-gray-50 cursor-pointer px-3 py-3 border-b border-gray-100">
+          <img :src="comment.profile_image_url" class="w-10 h-10 rounded-full hover:opacity-90 cursor-pointer" />
           <div class="ml-2 flex-1">
             <div class="flex items-center space-x-2">
-              <span class="font-bold">honey@honey.com</span>
-              <span class="text-sm text-gray">@honey-lee</span>
-              <span class="">2 days ago</span>
+              <span class="font-bold">{{ comment.email }}</span>
+              <span class="text-gray text-sm">@{{ comment.username }}</span>
+              <span>{{ moment(comment.created_at).fromNow() }}</span>
             </div>
-            <div>댓글</div>
+            <div>{{ comment.comment_tweet_body }}</div>
           </div>
-          <button>
+          <button @click="handleDeleteComment(comment)" v-if="comment.uid === currentUser.uid">
             <i class="fas fa-trash text-red-400 hover:bg-red-50 w-10 h-10 rounded-full p-2"></i>
           </button>
         </div>
       </div>
     </div>
     <trends></trends>
+    <comment-modal :tweet="tweet" v-if="showCommentModal" @close-modal="showCommentModal = false"></comment-modal>
   </div>
 </template>
 
 <script>
 import Trends from '../components/Trends.vue'
 import router from '../router'
+import { onBeforeMount, ref, computed } from 'vue'
+import store from '../store'
+import { COMMENT_COLLECTION, TWEET_COLLECTION } from '../firebase'
+import { useRoute } from 'vue-router'
+import getTweetInfo from '../utils/getTweetInfo'
+import moment from 'moment'
+import CommentModal from '../components/CommentModal.vue'
+import handleRetweet from '../utils/handleRetweet'
+import handleLikes from '../utils/handleLikes'
+import firebase from 'firebase'
+
 export default {
-  components: { Trends },
+  components: { Trends, CommentModal },
   setup() {
-    return { router }
-  }
+    const tweet = ref(null)
+    const comments = ref([])
+    const currentUser = computed(() => store.state.user)
+    const showCommentModal = ref(false)
+
+    const route = useRoute()
+
+    const handleDeleteComment = async (comment) => {
+      if (confirm('커멘트를 삭제하시겠습니까?')) {
+        // delete comment
+        await COMMENT_COLLECTION.doc(comment.id).delete()
+        // decrease tweet num comments
+        await TWEET_COLLECTION.doc(comment.from_tweet_id).update({
+          num_comments: firebase.firestore.FieldValue.increment(-1),
+        })
+      }
+    }
+
+    onBeforeMount(async () => {
+      await TWEET_COLLECTION.doc(route.params.id).onSnapshot(async (doc) => {
+        const t = await getTweetInfo(doc.data(), currentUser.value)
+        tweet.value = t
+      })
+
+      COMMENT_COLLECTION.where('from_tweet_id', '==', route.params.id)
+        .orderBy('created_at', 'desc')
+        .onSnapshot((snapshot) => {
+          snapshot.docChanges().forEach(async (change) => {
+            let comment = await getTweetInfo(change.doc.data(), currentUser.value)
+
+            if (change.type === 'added') {
+              comments.value.splice(change.newIndex, 0, comment)
+            } else if (change.type === 'modified') {
+              comments.value.splice(change.oldIndex, 1, comment)
+            } else if (change.type === 'removed') {
+              comments.value.splice(change.oldIndex, 1)
+            }
+          })
+        })
+    })
+    return { router, tweet, comments, currentUser, moment, showCommentModal, handleRetweet, handleLikes, handleDeleteComment }
+  },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
