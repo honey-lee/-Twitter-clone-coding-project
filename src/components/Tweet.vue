@@ -50,21 +50,25 @@
 
 <script>
 import moment from 'moment'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import CommentModal from './CommentModal.vue'
 import handleRetweet from '../utils/handleRetweet'
 import handleLikes from '../utils/handleLikes'
+import store from '../store'
 
 export default {
   components: { CommentModal },
   props: ['currentUser', 'tweet'],
+  
   setup() {
     const showCommentmodal = ref(false)
+    const currentUser = computed(() => store.state.user)
     return {
       moment,
       showCommentmodal,
       handleRetweet,
-      handleLikes
+      handleLikes,
+      currentUser
     }
   }
 }

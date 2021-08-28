@@ -25,7 +25,7 @@
         <!-- profile button -->
         <div class="xl:mr-3 mb-3" @click="showProfileDropdown=true">
             <button class="hidden xl:flex mt-3 px-2 py-1 w-full h-12 rounded-full hover:bg-blue-50">
-              <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full" alt="">
+              <img :src="currentUser.profile_image_url" class="w-10 h-10 rounded-full" alt="">
               <div class="xl:ml-2 hidden xl:block">
                 <div class="text-sm font-bold">{{ currentUser.email }}</div>
                 <div class="text-xs text-gray-500 text-left">@{{ currentUser.username }}</div>
