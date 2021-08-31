@@ -8,7 +8,7 @@
       :key="notification"
       class="flex flex-col hover:bg-gray-50 p-3 space-y-2 border-b border-gray-100 cursor-pointer">
       <div class="flex flex-row justify-between">
-        <img src="http://picsum.photos/100" class="w-10 h-10 rounded-full hover:opacity-80" alt="">
+        <img :src="currentUser.profile_image_url" class="w-10 h-10 rounded-full hover:opacity-80" alt="">
         <i class="fas fa-ellipsis-h text-gray-500 hover:bg-blue-50 hover:text-primary p-2 rounded-full w-10 h-10 flex items-center justify-center"></i>
       </div>
       <div>
@@ -26,8 +26,17 @@
 
 <script>
 import Trends from '../components/Trends.vue'
+import { computed } from 'vue'
+import store from '../store'
 export default {
   components: { Trends },
+  setup() {
+    const currentUser = computed(() => store.state.user)
+    return {
+      currentUser
+    }
+  }
+
 }
 </script>
 

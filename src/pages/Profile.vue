@@ -13,15 +13,16 @@
         </div>
       </div>
       <!-- background image -->
-      <div class="bg-gray-300 h-40 relative flex-none">
+      <div class="bg-gray-300 h-48 relative flex-none">
+        <img :src="profileUser.background_image_url" alt="" class="w-full h-48 object-cover" />
         <!-- profile image -->
         <div class="w-28 h-28 border-4 border-white bg-gray-100 rounded-full absolute -bottom-14 left-2">
-          <img :src="profileUser.profile_image_url" class="rounded-full opacity-90 hover:opacity-100 cursor-pointer" alt="">
+          <img :src="profileUser.profile_image_url" class="w-full h-full rounded-full opacity-90 hover:opacity-100 cursor-pointer" alt="">
         </div>
       </div>
       <!-- profile edit button -->
-      <div class="text-right mt-2 mr-2 mb-4 relative">
-        <button class="border text-sm border-primary text-primary px-3 py-1 hover:bg-blue-50 font-bold rounded-full">프로필 수정</button>
+      <div class="text-right mt-2 mr-2 mb-4 relative h-14">
+        <button v-if="currentUser.uid === profileUser.uid" @click="showProfileEditModal = true" class="border text-sm border-primary text-primary px-3 py-1 hover:bg-blue-50 font-bold rounded-full">프로필 수정</button>
       </div>
       <!-- user info -->
       <div class="mx-3 mt-2">
@@ -51,7 +52,7 @@
     </div>
     <!-- trend section -->
     <Trends />
-    <profile-edit-modal></profile-edit-modal>
+    <profile-edit-modal v-if="showProfileEditModal" @close-modal="showProfileEditModal=false"></profile-edit-modal>
   </div>
 </template>
 
@@ -77,6 +78,7 @@ export default {
     const likeTweets = ref([])
     const currentTab = ref('tweet')
     const route = useRoute()
+    const showProfileEditModal = ref(false)
 
     onBeforeMount(() => {
       const profileUID = route.params.uid ?? currentUser.value.uid
@@ -138,7 +140,8 @@ export default {
       reTweets,
       likeTweets,
       profileUser,
-      router
+      router,
+      showProfileEditModal
     }
   }
 
